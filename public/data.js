@@ -153,25 +153,24 @@ export const datos = {
   generales: [
     {
       title: "Generales",
-      url: "#",
       icon: SquareTerminal,
       isActive: true,
       cargos: [
         {
           title: "Presidentes",
-          url: "#",
+          url: "/dashboard/elecciones-generales/presidentes",
         },
         {
           title: "Vicepresidentes",
-          url: "#",
+          url: "/dashboard/elecciones-generales/vicepresidentes",
         },
         {
           title: "Senadores",
-          url: "#",
+          url: "/dashboard/elecciones-generales/senadores",
         },
         {
           title: "Diputados",
-          url: "#",
+          url: "/dashboard/elecciones-generales/diputados",
         },
       ],
     }
@@ -179,21 +178,20 @@ export const datos = {
   regionales: [
     {
       title: "Regionales",
-      url: "#",
       icon: SquareTerminal,
       isActive: true,
       cargos: [
         {
           title: "Gobernador Regional",
-          url: "#",
+          url: "/dashboard/gobernadores-regionales",
         },
         {
           title: "Vicegobernador Regional",
-          url: "#",
+          url: "/dashboard/vicegobernadores-regionales",
         },
         {
           title: "Consejeros Regionales",
-          url: "#",
+          url: "/dashboard/consejeros-regionales",
         }
       ],
     }
@@ -201,25 +199,24 @@ export const datos = {
   municipales: [
     {
       title: "Municipales",
-      url: "#",
       icon: SquareTerminal,
       isActive: true,
       cargos: [
         {
           title: "Alcaldes Provinciales",
-          url: "#",
+          url: "/dashboard/alcaldes-provinciales",
         },
         {
           title: "Regidores Provinciales",
-          url: "#",
+          url: "/dashboard/regidores-provinciales",
         },
         {
           title: "Alcaldes Distritales",
-          url: "#",
+          url: "/dashboard/alcaldes-distritales",
         },
         {
           title: "Regidores Distritales",
-          url: "#",
+          url: "/dashboard/regidores-distritales",
         }
       ],
     }

@@ -75,18 +75,18 @@ export function ProfileCardHorizontal({
         </div>
 
         {/* Right section - Content */}
-        <div className="flex-1 p-5 flex flex-col">
+        <div className="p-5 flex flex-col">
           {/* Header */}
           <div className="mb-3">
             <div className="flex items-start justify-between gap-3 mb-1">
-              <h2 className="text-xl font-bold text-slate-800 leading-tight">
+              <h2 className="text-lg font-bold text-slate-800 leading-tight">
                 {name}
               </h2>
               <span className={`shrink-0 text-xs font-semibold px-2.5 py-1 rounded-full ${scoreColor.light} ${scoreColor.text}`}>
                 {percentage >= 80 ? "Confiable" : percentage >= 60 ? "Revisar" : "Alerta"}
               </span>
             </div>
-            <p className="text-sm text-slate-500">{description}</p>
+            <p className="text-xs text-slate-500">{description}</p>
           </div>
 
           {/* Info pills */}

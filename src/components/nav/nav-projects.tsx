@@ -31,7 +31,6 @@ export function NavProjects({
 }: {
   projects: {
     title: string
-    url: string
     icon: LucideIcon
     cargos: {
       title: string

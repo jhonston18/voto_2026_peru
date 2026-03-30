@@ -34,7 +34,7 @@ export default function Page({
   return (
     <SidebarProvider>
       <AppSidebar />
-      <SidebarInset>
+      <SidebarInset className="p-3">
         {children}
       </SidebarInset>
 

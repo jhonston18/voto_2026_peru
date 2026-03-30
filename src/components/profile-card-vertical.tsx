@@ -50,12 +50,12 @@ export function ProfileCardVertical({
   const ScoreIcon = getScoreIcon(percentage)
 
   return (
-    <div className="bg-white rounded-2xl shadow-lg shadow-slate-200/50 border border-slate-100 overflow-hidden max-w-xs hover:shadow-xl transition-shadow duration-300">
+    <div className="bg-white rounded-2xl shadow-lg shadow-slate-200/50 border border-slate-100 overflow-hidden max-w-sm hover:shadow-xl transition-shadow duration-300">
       {/* Header with score */}
       <div className={`${scoreColor.bg} px-5 py-3 flex items-center justify-between`}>
         <div className="flex items-center gap-2">
           <ScoreIcon className="w-5 h-5 text-white" />
-          <span className="text-white text-sm font-medium">
+          <span className="text-white text-xs font-medium">
             {percentage >= 80 ? "Candidato Confiable" : percentage >= 60 ? "Revisar Antecedentes" : "Alerta"}
           </span>
         </div>
@@ -65,7 +65,7 @@ export function ProfileCardVertical({
       <div className="p-5">
         {/* Profile image and name */}
         <div className="flex gap-4 mb-4">
-          <div className="w-20 h-20 bg-linear-to-br from-slate-100 to-slate-200 rounded-xl overflow-hidden shrink-0 ring-2 ring-slate-100">
+          <div className="w-30 h-30 bg-linear-to-br from-slate-100 to-slate-200 rounded-xl overflow-hidden shrink-0 ring-2 ring-slate-100">
             {imageUrl ? (
               <img src={imageUrl} alt={name} className="w-full h-full object-cover" />
             ) : (
@@ -75,10 +75,10 @@ export function ProfileCardVertical({
             )}
           </div>
           <div className="flex-1 min-w-0">
-            <h2 className="text-lg font-bold text-slate-800 leading-tight mb-1 line-clamp-2">
+            <h2 className="text-xl font-bold text-slate-800 leading-tight mb-1 line-clamp-2">
               {name}
             </h2>
-            <p className="text-xs text-slate-500 line-clamp-2">{description}</p>
+            <p className="text-sm text-slate-500 line-clamp-2">{description}</p>
           </div>
         </div>
 
@@ -86,11 +86,11 @@ export function ProfileCardVertical({
         <div className="space-y-2 mb-4">
           <div className="flex items-center gap-2 bg-slate-50 rounded-lg px-3 py-2">
             <Users className="w-4 h-4 text-slate-500" />
-            <span className="text-sm text-slate-700">{party}</span>
+            <span className="text-xs text-slate-700">{party}</span>
           </div>
           <div className="flex items-center gap-2 bg-slate-50 rounded-lg px-3 py-2">
             <Building2 className="w-4 h-4 text-slate-500" />
-            <span className="text-sm text-slate-700 line-clamp-1">{position}</span>
+            <span className="text-xs text-slate-700 line-clamp-1">{position}</span>
           </div>
         </div>
 
