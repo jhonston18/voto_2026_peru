@@ -1,5 +1,4 @@
 
-
 import {
   Shield,
   ShieldCheck,
@@ -12,6 +11,8 @@ import {
   CheckCircle2,
   XCircle,
 } from "lucide-react"
+
+import ModalInfoCandidate from "@/components/modal-info-candidate"
 
 interface ProfileCardHorizontalProps {
   name: string
@@ -48,15 +49,19 @@ export function ProfileCardHorizontal({
   lawsuits = 0,
   onViewProfile,
 }: ProfileCardHorizontalProps) {
+
   const scoreColor = getScoreColor(percentage)
   const ScoreIcon = getScoreIcon(percentage)
 
+  // Dentro de ProfileCardHorizontal.tsx
+
   return (
-    <div className="bg-white rounded-2xl shadow-lg shadow-slate-200/50 border border-slate-100 overflow-hidden max-w-2xl hover:shadow-xl transition-shadow duration-300">
-      <div className="flex">
-        {/* Left section - Image and Score */}
-        <div className="relative shrink-0">
-          <div className="w-44 h-full min-h-[220px] bg-linear-to-br from-slate-100 to-slate-200">
+    <div className="bg-white rounded-2xl shadow-lg border border-slate-100 overflow-hidden w-full hover:shadow-xl transition-shadow duration-300">
+      <div className="flex flex-col sm:flex-row h-full"> {/* Cambio a columna en móviles muy pequeños */}
+
+        {/* Sección Izquierda - Imagen */}
+        <div className="relative shrink-0 w-full sm:w-40 md:w-48 lg:w-44">
+          <div className="h-full min-h-[200px] bg-slate-100">
             {imageUrl ? (
               <img src={imageUrl} alt={name} className="w-full h-full object-cover" />
             ) : (
@@ -65,7 +70,7 @@ export function ProfileCardHorizontal({
               </div>
             )}
           </div>
-          {/* Score badge overlay */}
+          {/* Badge de puntuación */}
           <div className={`absolute top-3 left-3 ${scoreColor.bg} rounded-xl px-3 py-2 shadow-lg`}>
             <div className="flex items-center gap-1.5">
               <ScoreIcon className="w-4 h-4 text-white" />
@@ -74,73 +79,52 @@ export function ProfileCardHorizontal({
           </div>
         </div>
 
-        {/* Right section - Content */}
-        <div className="p-5 flex flex-col">
-          {/* Header */}
+        {/* Sección Derecha - Contenido */}
+        <div className="p-5 flex flex-col flex-1 min-w-0"> {/* min-w-0 es la clave */}
           <div className="mb-3">
-            <div className="flex items-start justify-between gap-3 mb-1">
-              <h2 className="text-lg font-bold text-slate-800 leading-tight">
+            <div className="flex items-start justify-between gap-3">
+              <h2 className="text-lg font-bold text-slate-800 leading-tight truncate">
                 {name}
               </h2>
-              <span className={`shrink-0 text-xs font-semibold px-2.5 py-1 rounded-full ${scoreColor.light} ${scoreColor.text}`}>
+              <span className={`shrink-0 text-[10px] font-semibold px-2.5 py-1 rounded-full ${scoreColor.light} ${scoreColor.text}`}>
                 {percentage >= 80 ? "Confiable" : percentage >= 60 ? "Revisar" : "Alerta"}
               </span>
             </div>
-            <p className="text-xs text-slate-500">{description}</p>
+            <p className="text-xs text-slate-500 line-clamp-2 mt-1">{description}</p>
           </div>
 
-          {/* Info pills */}
+          {/* Info pills - Usamos flex-wrap para que no empujen la caja */}
           <div className="flex flex-wrap gap-2 mb-4">
-            <div className="inline-flex items-center gap-1.5 bg-slate-100 rounded-full px-3 py-1">
-              <Users className="w-3.5 h-3.5 text-slate-500" />
-              <span className="text-xs font-medium text-slate-700">{party}</span>
+            <div className="inline-flex items-center gap-1.5 bg-slate-50 border border-slate-100 rounded-full px-2 py-1">
+              <Users className="w-3 h-3 text-slate-500" />
+              <span className="text-[10px] font-medium text-slate-700">{party}</span>
             </div>
-            <div className="inline-flex items-center gap-1.5 bg-slate-100 rounded-full px-3 py-1">
-              <Building2 className="w-3.5 h-3.5 text-slate-500" />
-              <span className="text-xs font-medium text-slate-700">{position}</span>
-            </div>
-          </div>
-
-          {/* Stats row */}
-          <div className="flex gap-4 mb-4">
-            <div className="flex items-center gap-2">
-              {complaints === 0 ? (
-                <CheckCircle2 className="w-5 h-5 text-emerald-500" />
-              ) : (
-                <XCircle className="w-5 h-5 text-red-500" />
-              )}
-              <div>
-                <span className={`text-sm font-semibold ${complaints === 0 ? "text-emerald-600" : "text-red-600"}`}>
-                  {complaints} Denuncias
-                </span>
-              </div>
-            </div>
-            <div className="flex items-center gap-2">
-              {lawsuits === 0 ? (
-                <CheckCircle2 className="w-5 h-5 text-emerald-500" />
-              ) : (
-                <XCircle className="w-5 h-5 text-red-500" />
-              )}
-              <div>
-                <span className={`text-sm font-semibold ${lawsuits === 0 ? "text-emerald-600" : "text-red-600"}`}>
-                  {lawsuits} Demandas
-                </span>
-              </div>
+            <div className="inline-flex items-center gap-1.5 bg-slate-50 border border-slate-100 rounded-full px-2 py-1">
+              <Building2 className="w-3 h-3 text-slate-500" />
+              <span className="text-[10px] font-medium text-slate-700 truncate max-w-[120px]">{position}</span>
             </div>
           </div>
 
-          {/* Button */}
-          <div className="mt-auto flex justify-end">
-            <button
-              onClick={onViewProfile}
-              className="bg-slate-800 hover:bg-slate-900 text-white text-sm font-medium px-5 py-2.5 rounded-xl transition-colors flex items-center gap-2 group"
-            >
-              Ver perfil completo
-              <ChevronRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
-            </button>
+          {/* Stats y Botón */}
+          <div className="mt-auto pt-4 flex flex-wrap items-center justify-between gap-4 border-t border-slate-50">
+            <div className="flex gap-3">
+              <div className="flex items-center gap-1.5">
+                {complaints === 0 ? <CheckCircle2 className="w-4 h-4 text-emerald-500" /> : <XCircle className="w-4 h-4 text-red-500" />}
+                <span className="text-xs font-bold text-slate-600">{complaints} Denuncias</span>
+              </div>
+              <div className="flex items-center gap-1.5">
+                {lawsuits === 0 ? <CheckCircle2 className="w-4 h-4 text-emerald-500" /> : <XCircle className="w-4 h-4 text-red-500" />}
+                <span className="text-xs font-bold text-slate-600">{lawsuits} Demandas</span>
+              </div>
+            </div>
+            <div className="w-full flex justify-end">
+              <ModalInfoCandidate />
+            </div>
           </div>
         </div>
       </div>
     </div>
   )
+
 }
+

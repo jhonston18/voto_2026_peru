@@ -50,7 +50,7 @@ export function ProfileCardVertical({
   const ScoreIcon = getScoreIcon(percentage)
 
   return (
-    <div className="bg-white rounded-2xl shadow-lg shadow-slate-200/50 border border-slate-100 overflow-hidden max-w-sm hover:shadow-xl transition-shadow duration-300">
+    <div className="bg-white rounded-2xl shadow-lg shadow-slate-200/50 border border-slate-100 overflow-hidden w-full hover:shadow-xl transition-shadow duration-300">
       {/* Header with score */}
       <div className={`${scoreColor.bg} px-5 py-3 flex items-center justify-between`}>
         <div className="flex items-center gap-2">

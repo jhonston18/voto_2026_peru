@@ -29,11 +29,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 
   
 
-  sidebarData.generales.forEach((item, i) => {
-    item.cargos.forEach((cargo) => {
-      console.log(cargo)
-    })
-  } )
+  
 
   const data = dataSideBar;
   const dataUserInfo = dataUser;
