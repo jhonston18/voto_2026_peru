@@ -1,0 +1,74 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+
+}
+
+
+
+model Candidato {
+  id           Int @id @default(autoincrement())
+  dni Int @unique
+  nombres      String
+  apellidos    String
+  partido      String
+  aiScore      Int @default(0)
+  fotoUrl     String
+  directUrl    String
+  antecedentes Antecedente[]
+  cargo       Cargo @relation(fields: [cargoId], references: [id])
+  cargoId     Int
+  analisisIA    AnalisisIA?
+ 
+}
+
+model Antecedente {
+  id          Int @id @default(autoincrement())
+  tipo        String    // Ej: "Penal"
+  descripcion String
+  candidatoId Int
+  candidato Candidato @relation(fields: [candidatoId], references: [id], onDelete: Cascade)
+
+}
+
+model Cargo {
+  id Int @id @default(autoincrement())
+  nombre String @unique
+  slug String @unique
+  candidatos Candidato[]
+}
+
+model Partido {
+  id Int @id @default(autoincrement())
+  nombre String
+}
+
+model Profesion {
+  id Int @id @default(autoincrement())
+  profesion String
+}
+
+model AnalisisIA {
+  id Int @id @default(autoincrement())
+  candidatoId Int @unique
+  candidato Candidato @relation(fields: [candidatoId], references: [id], onDelete: Cascade)
+  score Int @default(0)
+  resumen String @db.Text
+  confianza String    
+  fuentesUsadas String[]  
+  ultimaActualizacion DateTime @default(now())
+}
+
+
+
+
