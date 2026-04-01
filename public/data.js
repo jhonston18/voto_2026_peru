@@ -4,13 +4,26 @@ import {
   BookOpen,
   Bot,
   Command,
+  Crown,
   Frame,
   GalleryVerticalEnd,
+  Gavel,
+  ChessKing,
   Map,
   PieChart,
+  Scale,
   Settings2,
   SquareTerminal,
+  ChessQueen,
+  ShieldHalf,
+  Cuboid,
+  BookUser,
+  Shapes,
+  Boxes,
+  ChessRook,
+  Diameter,
 } from "lucide-react"
+
 
 // This is sample data.
 
@@ -24,153 +37,34 @@ export const dataUser = {
 }
 
 
-export const dataSideBar = {
-  teams: [
-    {
-      name: "Acme Inc",
-      logo: GalleryVerticalEnd,
-      plan: "Enterprise",
-    },
-    {
-      name: "Acme Corp.",
-      logo: AudioWaveform,
-      plan: "Startup",
-    },
-    {
-      name: "Evil Corp.",
-      logo: Command,
-      plan: "Free",
-    },
-  ],
-  navMain: [
-    {
-      title: "Playground",
-      url: "#",
-      icon: SquareTerminal,
-      isActive: true,
-      items: [
-        {
-          title: "History",
-          url: "#",
-        },
-        {
-          title: "Starred",
-          url: "#",
-        },
-        {
-          title: "Settings",
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "Models",
-      url: "#",
-      icon: Bot,
-      items: [
-        {
-          title: "Genesis",
-          url: "#",
-        },
-        {
-          title: "Explorer",
-          url: "#",
-        },
-        {
-          title: "Quantum",
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "Documentation",
-      url: "#",
-      icon: BookOpen,
-      items: [
-        {
-          title: "Introduction",
-          url: "#",
-        },
-        {
-          title: "Get Started",
-          url: "#",
-        },
-        {
-          title: "Tutorials",
-          url: "#",
-        },
-        {
-          title: "Changelog",
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "Settings",
-      url: "#",
-      icon: Settings2,
-      items: [
-        {
-          title: "General",
-          url: "#",
-        },
-        {
-          title: "Team",
-          url: "#",
-        },
-        {
-          title: "Billing",
-          url: "#",
-        },
-        {
-          title: "Limits",
-          url: "#",
-        },
-      ],
-    },
-  ],
-  projects: [
-    {
-      name: "Design Engineering",
-      url: "/dashboard/perfiles",
-      icon: Frame,
-    },
-    {
-      name: "Sales & Marketing",
-      url: "/dashboard/perfiles",
-      icon: PieChart,
-    },
-    {
-      name: "Travel",
-      url: "/dashboard/perfiles",
-      icon: Map,
-    },
-  ],
-}
+
 
 
 export const datos = {
   generales: [
     {
       title: "Generales",
-      icon: SquareTerminal,
       isActive: true,
       cargos: [
         {
           title: "Presidentes",
           url: "/dashboard/elecciones-generales/presidentes",
+          icon: Crown
         },
         {
           title: "Vicepresidentes",
           url: "/dashboard/elecciones-generales/vicepresidentes",
+          icon: ChessKing
         },
         {
           title: "Senadores",
           url: "/dashboard/elecciones-generales/senadores",
+          icon: Gavel
         },
         {
           title: "Diputados",
           url: "/dashboard/elecciones-generales/diputados",
+          icon: Scale
         },
       ],
     }
@@ -178,20 +72,22 @@ export const datos = {
   regionales: [
     {
       title: "Regionales",
-      icon: SquareTerminal,
       isActive: true,
       cargos: [
         {
           title: "Gobernador Regional",
           url: "/dashboard/gobernadores-regionales",
+          icon: ChessQueen
         },
         {
           title: "Vicegobernador Regional",
           url: "/dashboard/vicegobernadores-regionales",
+          icon: ShieldHalf
         },
         {
           title: "Consejeros Regionales",
           url: "/dashboard/consejeros-regionales",
+          icon: BookUser 
         }
       ],
     }
@@ -199,24 +95,40 @@ export const datos = {
   municipales: [
     {
       title: "Municipales",
-      icon: SquareTerminal,
       isActive: true,
       cargos: [
         {
           title: "Alcaldes Provinciales",
           url: "/dashboard/alcaldes-provinciales",
+          icon: Shapes
         },
         {
           title: "Regidores Provinciales",
           url: "/dashboard/regidores-provinciales",
+          icon: Boxes
         },
         {
           title: "Alcaldes Distritales",
           url: "/dashboard/alcaldes-distritales",
+          icon: ChessRook
         },
         {
           title: "Regidores Distritales",
           url: "/dashboard/regidores-distritales",
+          icon: Diameter
+        }
+      ],
+    }
+  ],
+  parlamentoAndino: [
+    {
+      title: "Parlamento Andino",
+      isActive: true,
+      cargos: [
+        {
+          title: "Parlamento Andino",
+          url: "/dashboard/alcaldes-provinciales",
+          icon: Shapes
         }
       ],
     }

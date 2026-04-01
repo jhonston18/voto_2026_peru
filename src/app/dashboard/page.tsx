@@ -9,18 +9,19 @@ import ModalInfoCandidate from "@/components/modal-info-candidate";
 
 import { Separator } from "@/components/ui/separator";
 
+
 export default function PageDashboard() {
   return (
     <div className="space-y-12 ">
-      <div className="text-black">
+      <div>
         <label className="text-2xl text-bold">Inicio</label>
         <p>Esta es la seccion de inicio donde veras a todos los candidatos</p>
       </div>
 
       {/* Horizontal Cards Section */}
       <section>
-        <h2 className="text-lg font-semibold text-slate-700 mb-4">
-          Presidentes (Modo Oscuro)
+        <h2 className="text-xl font-black text-[#777] dark:text-blue mb-4">
+          PRESIDENTES
         </h2>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* High score candidate */}
@@ -68,8 +69,8 @@ export default function PageDashboard() {
       </section>
 
       <section>
-        <h2 className="text-lg font-semibold text-slate-700 mb-4">
-          Vicepresidentes (Modo Oscuro)
+        <h2 className="text-xl font-black text-[#777] dark:text-blue mb-4">
+          VICEPRESIDENTES
         </h2>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* High score candidate */}

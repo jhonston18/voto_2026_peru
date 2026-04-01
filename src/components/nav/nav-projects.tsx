@@ -31,10 +31,10 @@ export function NavProjects({
 }: {
   projects: {
     title: string
-    icon: LucideIcon
     cargos: {
       title: string
       url: string
+      icon: LucideIcon
     }[]
   }[]
 }) {
@@ -54,12 +54,11 @@ export function NavProjects({
                 
                   <SidebarMenuButton asChild>
                     <Link href={cargo.url} className="flex">
-                      <item.icon />
+                      <cargo.icon/>
                       <span>{cargo.title}</span>
                     </Link>
                   </SidebarMenuButton>
-              
-
+                  
               </SidebarMenuItem>
               ))}
 

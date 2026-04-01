@@ -10,6 +10,7 @@ import {
   Users,
   ChevronRight,
 } from "lucide-react"
+import ModalInfoCandidate from "./modal-info-candidate"
 
 interface ProfileCardVerticalProps {
   name: string
@@ -50,84 +51,89 @@ export function ProfileCardVertical({
   const ScoreIcon = getScoreIcon(percentage)
 
   return (
-    <div className="bg-white rounded-2xl shadow-lg shadow-slate-200/50 border border-slate-100 overflow-hidden w-full hover:shadow-xl transition-shadow duration-300">
-      {/* Header with score */}
-      <div className={`${scoreColor.bg} px-5 py-3 flex items-center justify-between`}>
-        <div className="flex items-center gap-2">
-          <ScoreIcon className="w-5 h-5 text-white" />
-          <span className="text-white text-xs font-medium">
-            {percentage >= 80 ? "Candidato Confiable" : percentage >= 60 ? "Revisar Antecedentes" : "Alerta"}
+    <div className="group bg-card rounded-3xl shadow-sm border border-border overflow-hidden w-full hover:shadow-xl hover:ring-1 hover:ring-primary/10 transition-all duration-500">
+
+      {/* Header con Score - Estilo Banner */}
+      <div className={`${scoreColor.bg} px-6 py-4 flex items-center justify-between relative overflow-hidden`}>
+        {/* Decoración de fondo para el header */}
+        <div className="absolute right-[-10%] top-[-20%] opacity-20 transform rotate-12">
+          <ScoreIcon className="w-24 h-24 text-white" />
+        </div>
+
+        <div className="flex items-center gap-2.5 z-10">
+          <div className="bg-white/20 backdrop-blur-md p-1.5 rounded-lg">
+            <ScoreIcon className="w-5 h-5 text-white" />
+          </div>
+          <span className="text-white text-[10px] uppercase font-black tracking-[0.1em]">
+            {percentage >= 80 ? "Candidato Confiable" : percentage >= 60 ? "Bajo Revisión" : "Alerta Crítica"}
           </span>
         </div>
-        <span className="text-white text-2xl font-bold">{percentage}%</span>
+        <span className="text-white text-3xl font-mono font-black z-10 tracking-tighter">
+          {percentage}%
+        </span>
       </div>
 
-      <div className="p-5">
-        {/* Profile image and name */}
-        <div className="flex gap-4 mb-4">
-          <div className="w-30 h-30 bg-linear-to-br from-slate-100 to-slate-200 rounded-xl overflow-hidden shrink-0 ring-2 ring-slate-100">
+      <div className="p-6">
+        {/* Imagen y Nombre - Layout Vertical */}
+        <div className="flex items-start gap-4 mb-6">
+          <div className="w-24 h-24 bg-muted rounded-2xl overflow-hidden shrink-0 ring-4 ring-secondary/50 group-hover:ring-primary/10 transition-all duration-500">
             {imageUrl ? (
-              <img src={imageUrl} alt={name} className="w-full h-full object-cover" />
+              <img src={imageUrl} alt={name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
             ) : (
               <div className="w-full h-full flex items-center justify-center">
-                <Users className="w-8 h-8 text-slate-400" />
+                <Users className="w-8 h-8 text-muted-foreground/30" />
               </div>
             )}
           </div>
           <div className="flex-1 min-w-0">
-            <h2 className="text-xl font-bold text-slate-800 leading-tight mb-1 line-clamp-2">
+            <h2 className="text-primary text-xl font-bold font-heading text-foreground leading-[1.1] mb-2 line-clamp-2 tracking-tight group-hover: transition-colors">
               {name}
             </h2>
-            <p className="text-sm text-slate-500 line-clamp-2">{description}</p>
+            <p className="text-xs text-muted-foreground/80 font-medium leading-relaxed line-clamp-2 italic">
+              "{description}"
+            </p>
           </div>
         </div>
 
-        {/* Info badges */}
-        <div className="space-y-2 mb-4">
-          <div className="flex items-center gap-2 bg-slate-50 rounded-lg px-3 py-2">
-            <Users className="w-4 h-4 text-slate-500" />
-            <span className="text-xs text-slate-700">{party}</span>
+        {/* Info Badges - Estilo Listado */}
+        <div className="grid gap-2 mb-6">
+          <div className="flex items-center gap-3 bg-secondary/40 border border-border/40 rounded-xl px-3 py-2.5">
+            <Users className="w-4 h-4 text-primary/70" />
+            <span className="text-[11px] font-bold uppercase tracking-wide text-secondary-foreground truncate">{party}</span>
           </div>
-          <div className="flex items-center gap-2 bg-slate-50 rounded-lg px-3 py-2">
-            <Building2 className="w-4 h-4 text-slate-500" />
-            <span className="text-xs text-slate-700 line-clamp-1">{position}</span>
+          <div className="flex items-center gap-3 bg-secondary/40 border border-border/40 rounded-xl px-3 py-2.5">
+            <Building2 className="w-4 h-4 text-primary/70" />
+            <span className="text-[11px] font-bold uppercase tracking-wide text-secondary-foreground line-clamp-1">{position}</span>
           </div>
         </div>
 
-        {/* Stats */}
-        <div className="grid grid-cols-2 gap-3 mb-4">
-          <div className={`rounded-lg px-3 py-2 ${complaints === 0 ? "bg-emerald-50" : "bg-red-50"}`}>
-            <div className="flex items-center gap-1.5 mb-0.5">
-              <FileWarning className={`w-3.5 h-3.5 ${complaints === 0 ? "text-emerald-600" : "text-red-600"}`} />
-              <span className={`text-xs font-medium ${complaints === 0 ? "text-emerald-600" : "text-red-600"}`}>
-                Denuncias
-              </span>
+        {/* Stats de Antecedentes - Diseño de Cuadrículas */}
+        <div className="grid grid-cols-2 gap-3 mb-6">
+          <div className={`rounded-2xl p-3 border ${complaints === 0 ? "bg-emerald-500/5 border-emerald-500/10" : "bg-red-500/5 border-red-500/10"}`}>
+            <div className="flex items-center gap-2 mb-1">
+              <FileWarning className={`w-3.5 h-3.5 ${complaints === 0 ? "text-emerald-500" : "text-red-500"}`} />
+              <span className="text-[10px] font-black uppercase tracking-tighter text-muted-foreground">Denuncias</span>
             </div>
-            <span className={`text-lg font-bold ${complaints === 0 ? "text-emerald-700" : "text-red-700"}`}>
+            <span className={`text-2xl font-mono font-black ${complaints === 0 ? "text-emerald-600" : "text-red-600"}`}>
               {complaints}
             </span>
           </div>
-          <div className={`rounded-lg px-3 py-2 ${lawsuits === 0 ? "bg-emerald-50" : "bg-red-50"}`}>
-            <div className="flex items-center gap-1.5 mb-0.5">
-              <Scale className={`w-3.5 h-3.5 ${lawsuits === 0 ? "text-emerald-600" : "text-red-600"}`} />
-              <span className={`text-xs font-medium ${lawsuits === 0 ? "text-emerald-600" : "text-red-600"}`}>
-                Demandas
-              </span>
+
+          <div className={`rounded-2xl p-3 border ${lawsuits === 0 ? "bg-emerald-500/5 border-emerald-500/10" : "bg-red-500/5 border-red-500/10"}`}>
+            <div className="flex items-center gap-2 mb-1">
+              <Scale className={`w-3.5 h-3.5 ${lawsuits === 0 ? "text-emerald-500" : "text-red-500"}`} />
+              <span className="text-[10px] font-black uppercase tracking-tighter text-muted-foreground">Demandas</span>
             </div>
-            <span className={`text-lg font-bold ${lawsuits === 0 ? "text-emerald-700" : "text-red-700"}`}>
+            <span className={`text-2xl font-mono font-black ${lawsuits === 0 ? "text-emerald-600" : "text-red-600"}`}>
               {lawsuits}
             </span>
           </div>
         </div>
 
-        {/* Button */}
-        <button
-          onClick={onViewProfile}
-          className="w-full bg-slate-800 hover:bg-slate-900 text-white text-sm font-medium px-4 py-2.5 rounded-xl transition-colors flex items-center justify-center gap-2 group"
-        >
-          Ver perfil completo
-          <ChevronRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
-        </button>
+        {/* Botón de Acción - Estilo Moderno */}
+        <div className="group/btn">
+          <ModalInfoCandidate />
+        </div>
       </div>
     </div>
   )

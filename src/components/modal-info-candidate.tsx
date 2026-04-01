@@ -9,12 +9,19 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
+import { ChevronRight } from "lucide-react"
 
 export default function ModalInfoCandidate() {
   return (
     <Dialog>
-      <DialogTrigger className="text-black" asChild>{/* este es el boton que habre el dialog */}
-        <Button variant="outline">Ver informacion completa</Button>
+      <DialogTrigger className="text-white bg-blue-600 hover:bg-blue-700 dark:text-white " asChild>{/* este es el boton que habre el dialog */}
+        {/* Botón de Acción - Estilo Moderno */}
+        <button
+          className="w-full bg-[#444] text-xs/2 font-black uppercase tracking-[0.2em] px-4 py-4 rounded-2xl transition-all shadow-md flex items-center justify-center gap-2 dark:bg-primary/20 group/btn"
+        >
+          Ver perfil completo
+          <ChevronRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
+        </button>
       </DialogTrigger>
       <DialogContent>{/**Este es el modal */}
         <DialogHeader>

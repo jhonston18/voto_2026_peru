@@ -8,13 +8,16 @@ import {
   FileWarning,
   Building2,
   Users,
-  Award,
+  Clock,
   TrendingUp,
   TrendingDown,
   ExternalLink,
   Calendar,
   MapPin,
 } from "lucide-react"
+
+import ModalInfoCandidate from "@/components/modal-info-candidate"
+
 
 interface ProfileCardDetailedProps {
   name: string
@@ -32,25 +35,27 @@ interface ProfileCardDetailedProps {
   onViewProfile?: () => void
 }
 
+
+
 function getScoreConfig(percentage: number) {
-  if (percentage >= 80) return { 
-    icon: ShieldCheck, 
+  if (percentage >= 80) return {
+    icon: ShieldCheck,
     gradient: "from-emerald-500 to-teal-600",
     text: "text-emerald-600",
     bg: "bg-emerald-50",
     label: "Candidato Confiable",
     trend: TrendingUp
   }
-  if (percentage >= 60) return { 
-    icon: Shield, 
+  if (percentage >= 60) return {
+    icon: Shield,
     gradient: "from-amber-500 to-orange-500",
     text: "text-amber-600",
     bg: "bg-amber-50",
     label: "Requiere Revisión",
     trend: TrendingDown
   }
-  return { 
-    icon: ShieldAlert, 
+  return {
+    icon: ShieldAlert,
     gradient: "from-red-500 to-rose-600",
     text: "text-red-600",
     bg: "bg-red-50",
@@ -58,6 +63,7 @@ function getScoreConfig(percentage: number) {
     trend: TrendingDown
   }
 }
+
 
 export function ProfileCardDetailed({
   name,
@@ -79,112 +85,100 @@ export function ProfileCardDetailed({
   const TrendIcon = config.trend
 
   return (
-    <div className="bg-white rounded-2xl shadow-xl shadow-slate-200/50 border border-slate-100 overflow-hidden max-w-md">
-      {/* Header gradient */}
-      <div className={`bg-gradient-to-r ${config.gradient} p-5`}>
-        <div className="flex items-start justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-xl overflow-hidden ring-2 ring-white/30">
+    <div className="bg-card rounded-[2rem] shadow-xl border border-border overflow-hidden max-w-md group transition-all duration-500 hover:shadow-2xl hover:border-primary/20">
+
+      {/* Header con Gradiente y Glassmorphism */}
+      <div className={`bg-gradient-to-br ${config.gradient || 'from-slate-800 to-slate-950'} p-6 relative overflow-hidden`}>
+        {/* Círculos decorativos de fondo */}
+        <div className="absolute -right-4 -top-4 w-24 h-24 bg-white/10 rounded-full blur-2xl" />
+
+        <div className="flex items-start justify-between relative z-10">
+          <div className="flex items-center gap-4">
+            <div className="w-20 h-20 bg-background/20 backdrop-blur-md rounded-2xl overflow-hidden ring-2 ring-white/30 shadow-inner">
               {imageUrl ? (
-                <img src={imageUrl} alt={name} className="w-full h-full object-cover" />
+                <img src={imageUrl} alt={name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
               ) : (
-                <div className="w-full h-full flex items-center justify-center text-white font-bold text-xl">
+                <div className="w-full h-full flex items-center justify-center text-white font-black font-heading text-2xl bg-white/10">
                   {name.split(" ").map(n => n[0]).slice(0, 2).join("")}
                 </div>
               )}
             </div>
             <div>
-              <h2 className="text-white font-bold text-lg leading-tight">{name}</h2>
-              <p className="text-white/80 text-sm">{position}</p>
+              <h2 className="text-white font-black font-heading text-xl leading-tight tracking-tight">{name}</h2>
+              <p className="text-white/70 text-xs font-bold uppercase tracking-widest mt-1">{position}</p>
             </div>
           </div>
-          {verified && (
-            <div className="bg-white/20 backdrop-blur-sm rounded-full px-2 py-1 flex items-center gap-1">
-              <Award className="w-3 h-3 text-white" />
-              <span className="text-white text-xs font-medium">Verificado</span>
-            </div>
-          )}
+
         </div>
       </div>
 
-      <div className="p-5">
-        {/* Score section */}
-        <div className={`${config.bg} rounded-xl p-4 mb-4 flex items-center justify-between`}>
-          <div className="flex items-center gap-3">
-            <div className={`p-2 rounded-lg bg-gradient-to-br ${config.gradient}`}>
+      <div className="p-6">
+        {/* Panel de Score Central */}
+        <div className={`bg-secondary/30 border border-border/50 rounded-2xl p-5 mb-6 flex items-center justify-between group/score transition-colors hover:bg-secondary/50`}>
+          <div className="flex items-center gap-4">
+            <div className={`p-3 rounded-xl bg-gradient-to-br ${config.gradient || 'from-primary to-primary/80'} shadow-lg shadow-primary/20 group-hover/score:scale-110 transition-transform`}>
               <ScoreIcon className="w-6 h-6 text-white" />
             </div>
             <div>
-              <p className={`${config.text} font-semibold`}>{config.label}</p>
-              <div className="flex items-center gap-1 text-slate-500 text-xs">
-                <TrendIcon className="w-3 h-3" />
-                <span>Actualizado {lastUpdated}</span>
+              <p className={`text-sm font-black uppercase tracking-widest ${config.text}`}>
+                {percentage >= 80 ? "Confiable" : percentage >= 60 ? "Revisar" : "Alerta"}
+              </p>
+              <div className="flex items-center gap-1.5 text-muted-foreground text-[10px] font-bold mt-0.5">
+                <Clock className="w-3 h-3" />
+                <span>ACTUALIZADO: {lastUpdated}</span>
               </div>
             </div>
           </div>
           <div className="text-right">
-            <span className={`text-4xl font-bold ${config.text}`}>{percentage}</span>
-            <span className={`text-lg ${config.text}`}>%</span>
+            <span className={`text-4xl font-mono font-black tracking-tighter ${config.text}`}>{percentage}</span>
+            <span className={`text-lg font-bold ${config.text}`}>%</span>
           </div>
         </div>
 
-        {/* Description */}
-        <p className="text-slate-600 text-sm mb-4 leading-relaxed">{description}</p>
+        {/* Descripción con estilo de "Cita" */}
+        <p className="text-muted-foreground text-sm mb-6 leading-relaxed font-medium italic border-l-2 border-primary/20 pl-4">
+          "{description}"
+        </p>
 
-        {/* Info grid */}
-        <div className="grid grid-cols-2 gap-3 mb-4">
-          <div className="bg-slate-50 rounded-lg p-3">
-            <div className="flex items-center gap-2 text-slate-500 mb-1">
-              <Users className="w-4 h-4" />
-              <span className="text-xs">Partido</span>
+        {/* Grid de Información Técnica */}
+        <div className="grid grid-cols-2 gap-3 mb-6">
+          {[
+            { icon: Users, label: "PARTIDO", value: party },
+            { icon: Calendar, label: "EXPERIENCIA", value: `${experience} Años` }
+          ].map((item, i) => (
+            <div key={i} className="bg-secondary/20 border border-border/30 rounded-xl p-3 hover:border-primary/30 transition-colors">
+              <div className="flex items-center gap-2 text-muted-foreground/60 mb-1">
+                <item.icon className="w-3.5 h-3.5" />
+                <span className="text-[9px] font-black tracking-widest">{item.label}</span>
+              </div>
+              <p className="text-sm font-bold text-foreground truncate uppercase dark:text-white">{item.value}</p>
             </div>
-            <p className="text-sm font-medium text-slate-800 truncate">{party}</p>
+          ))}
+        </div>
+
+        {/* Sección Legal / Antecedentes */}
+        <div className="flex gap-4 mb-6">
+          <div className={`flex-1 rounded-2xl p-4 border transition-all ${complaints === 0 ? "bg-emerald-500/5 border-emerald-500/10" : "bg-red-500/5 border-red-500/10"}`}>
+            <div className="flex items-center gap-2 mb-2">
+              <FileWarning className={`w-4 h-4 ${complaints === 0 ? "text-emerald-500" : "text-red-500"}`} />
+              <span className={`text-[10px] font-black tracking-tighter uppercase ${complaints === 0 ? "text-emerald-600" : "text-red-600"}`}>Denuncias</span>
+            </div>
+            <p className={`text-3xl font-mono font-black ${complaints === 0 ? "text-emerald-600" : "text-red-600"}`}>{complaints}</p>
           </div>
-          <div className="bg-slate-50 rounded-lg p-3">
-            <div className="flex items-center gap-2 text-slate-500 mb-1">
-              <Calendar className="w-4 h-4" />
-              <span className="text-xs">Experiencia</span>
+
+          <div className={`flex-1 rounded-2xl p-4 border transition-all ${lawsuits === 0 ? "bg-emerald-500/5 border-emerald-500/10" : "bg-red-500/5 border-red-500/10"}`}>
+            <div className="flex items-center gap-2 mb-2">
+              <Scale className={`w-4 h-4 ${lawsuits === 0 ? "text-emerald-500" : "text-red-500"}`} />
+              <span className={`text-[10px] font-black tracking-tighter uppercase ${lawsuits === 0 ? "text-emerald-600" : "text-red-600"}`}>Procesos</span>
             </div>
-            <p className="text-sm font-medium text-slate-800">{experience} años</p>
-          </div>
-          <div className="bg-slate-50 rounded-lg p-3">
-            <div className="flex items-center gap-2 text-slate-500 mb-1">
-              <MapPin className="w-4 h-4" />
-              <span className="text-xs">Región</span>
-            </div>
-            <p className="text-sm font-medium text-slate-800">{region}</p>
-          </div>
-          <div className="bg-slate-50 rounded-lg p-3">
-            <div className="flex items-center gap-2 text-slate-500 mb-1">
-              <Building2 className="w-4 h-4" />
-              <span className="text-xs">Cargo</span>
-            </div>
-            <p className="text-sm font-medium text-slate-800 truncate">{position}</p>
+            <p className={`text-3xl font-mono font-black ${lawsuits === 0 ? "text-emerald-600" : "text-red-600"}`}>{lawsuits}</p>
           </div>
         </div>
 
-        {/* Complaints & Lawsuits */}
-        <div className="flex gap-3 mb-5">
-          <div className={`flex-1 rounded-xl p-3 ${complaints === 0 ? "bg-emerald-50 border border-emerald-100" : "bg-red-50 border border-red-100"}`}>
-            <FileWarning className={`w-5 h-5 mb-2 ${complaints === 0 ? "text-emerald-600" : "text-red-600"}`} />
-            <p className={`text-2xl font-bold ${complaints === 0 ? "text-emerald-700" : "text-red-700"}`}>{complaints}</p>
-            <p className={`text-xs ${complaints === 0 ? "text-emerald-600" : "text-red-600"}`}>Denuncias activas</p>
-          </div>
-          <div className={`flex-1 rounded-xl p-3 ${lawsuits === 0 ? "bg-emerald-50 border border-emerald-100" : "bg-red-50 border border-red-100"}`}>
-            <Scale className={`w-5 h-5 mb-2 ${lawsuits === 0 ? "text-emerald-600" : "text-red-600"}`} />
-            <p className={`text-2xl font-bold ${lawsuits === 0 ? "text-emerald-700" : "text-red-700"}`}>{lawsuits}</p>
-            <p className={`text-xs ${lawsuits === 0 ? "text-emerald-600" : "text-red-600"}`}>Procesos judiciales</p>
-          </div>
+        {/* Botón Call-to-Action */}
+        <div className="group/btn">
+          <ModalInfoCandidate />
         </div>
-
-        {/* Button */}
-        <button
-          onClick={onViewProfile}
-          className={`w-full bg-gradient-to-r ${config.gradient} text-white font-semibold px-4 py-3 rounded-xl transition-all hover:shadow-lg flex items-center justify-center gap-2`}
-        >
-          Ver perfil completo
-          <ExternalLink className="w-4 h-4" />
-        </button>
       </div>
     </div>
   )
