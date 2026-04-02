@@ -15,8 +15,8 @@ import {
   Calendar,
   MapPin,
 } from "lucide-react"
+import Boton from "./boton"
 
-import ModalInfoCandidate from "@/components/modal-info-candidate"
 
 
 interface ProfileCardDetailedProps {
@@ -88,24 +88,24 @@ export function ProfileCardDetailed({
     <div className="bg-card rounded-[2rem] shadow-xl border border-border overflow-hidden max-w-md group transition-all duration-500 hover:shadow-2xl hover:border-primary/20">
 
       {/* Header con Gradiente y Glassmorphism */}
-      <div className={`bg-gradient-to-br ${config.gradient || 'from-slate-800 to-slate-950'} p-6 relative overflow-hidden`}>
+      <div className="border-b-[.2px] border-gray-200 p-6 relative overflow-hidden">
         {/* Círculos decorativos de fondo */}
         <div className="absolute -right-4 -top-4 w-24 h-24 bg-white/10 rounded-full blur-2xl" />
 
         <div className="flex items-start justify-between relative z-10">
           <div className="flex items-center gap-4">
-            <div className="w-20 h-20 bg-background/20 backdrop-blur-md rounded-2xl overflow-hidden ring-2 ring-white/30 shadow-inner">
+            <div className="w-20 h-20 bg-background/20 backdrop-blur-md rounded-2xl overflow-hidden ring-2 ring-gray-200 shadow-inner">
               {imageUrl ? (
                 <img src={imageUrl} alt={name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
               ) : (
-                <div className="w-full h-full flex items-center justify-center text-white font-black font-heading text-2xl bg-white/10">
+                <div className="w-full h-full flex items-center justify-center text-[#777] dark:text-white font-black font-heading text-2xl bg-white/10">
                   {name.split(" ").map(n => n[0]).slice(0, 2).join("")}
                 </div>
               )}
             </div>
             <div>
-              <h2 className="text-white font-black font-heading text-xl leading-tight tracking-tight">{name}</h2>
-              <p className="text-white/70 text-xs font-bold uppercase tracking-widest mt-1">{position}</p>
+              <h2 className="text-black font-black font-heading text-xl leading-tight tracking-tight dark:text-white">{name}</h2>
+              <p className="text-[#666] text-xs font-bold uppercase tracking-widest mt-1 dark:text-white/70">{position}</p>
             </div>
           </div>
 
@@ -177,7 +177,7 @@ export function ProfileCardDetailed({
 
         {/* Botón Call-to-Action */}
         <div className="group/btn">
-          <ModalInfoCandidate />
+          <Boton />
         </div>
       </div>
     </div>

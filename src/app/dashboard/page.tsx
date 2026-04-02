@@ -4,8 +4,6 @@ import { AppSidebar } from "@/components/sidebar/app-sidebar";
 import { ProfileCardVertical } from "@/components//profile-card-vertical";
 import { ProfileCardHorizontal } from "@/components/profile-card-horizontal";
 import { ProfileCardDetailed } from "@/components/card-details";
-import { ProfileCardStats } from "@/components/card-stats";
-import ModalInfoCandidate from "@/components/modal-info-candidate";
 
 import { Separator } from "@/components/ui/separator";
 
@@ -14,13 +12,13 @@ export default function PageDashboard() {
   return (
     <div className="space-y-12 ">
       <div>
-        <label className="text-2xl text-bold">Inicio</label>
-        <p>Esta es la seccion de inicio donde veras a todos los candidatos</p>
+        <label className="text-2xl font-black text-blue-600 ">Inicio</label>
+        <p className="text-black dark:text-white">Esta es la seccion de inicio donde veras a todos los candidatos</p>
       </div>
 
       {/* Horizontal Cards Section */}
       <section>
-        <h2 className="text-xl font-black text-[#777] dark:text-blue mb-4">
+        <h2 className="text-xl font-black text-[#777] mb-4">
           PRESIDENTES
         </h2>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -33,7 +31,6 @@ export default function PageDashboard() {
             position="Ex-Gerente General de Alicorp"
             complaints={0}
             lawsuits={0}
-            onViewProfile={ModalInfoCandidate}
           />
           {/* Medium score candidate */}
           <ProfileCardHorizontal

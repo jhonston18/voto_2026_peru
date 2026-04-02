@@ -12,7 +12,8 @@ import {
   XCircle,
 } from "lucide-react"
 
-import ModalInfoCandidate from "@/components/modal-info-candidate"
+
+import Boton from "./boton"
 
 interface ProfileCardHorizontalProps {
   name: string
@@ -85,7 +86,7 @@ export function ProfileCardHorizontal({
               <h2 className="text-xl md:text-2xl font-bold font-heading text-primary leading-[1.1] tracking-tight ">
                 {name}
               </h2>
-              <span className={`shrink-0 text-[10px] uppercase tracking-[0.15em] font-black px-3 py-1.5 rounded-lg ${scoreColor.light} ${scoreColor.text} border border-current/10`}>
+              <span className={`shrink-0 text-[10px] uppercase tracking-[0.15em] font-black px-3 py-1.5 rounded-lg ${scoreColor.text} border border-current/10`}>
                 {percentage >= 80 ? "Confiable" : percentage >= 60 ? "Revisar" : "Alerta"}
               </span>
             </div>
@@ -128,8 +129,8 @@ export function ProfileCardHorizontal({
               </div>
             </div>
             
-            <div className="group/btn">
-              <ModalInfoCandidate />
+            <div className="w-full flex justify-end group/btn ">
+              <Boton />
             </div>
           </div>
         </div>

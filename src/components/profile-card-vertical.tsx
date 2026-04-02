@@ -10,7 +10,8 @@ import {
   Users,
   ChevronRight,
 } from "lucide-react"
-import ModalInfoCandidate from "./modal-info-candidate"
+
+import Boton from "./boton"
 
 interface ProfileCardVerticalProps {
   name: string
@@ -54,21 +55,21 @@ export function ProfileCardVertical({
     <div className="group bg-card rounded-3xl shadow-sm border border-border overflow-hidden w-full hover:shadow-xl hover:ring-1 hover:ring-primary/10 transition-all duration-500">
 
       {/* Header con Score - Estilo Banner */}
-      <div className={`${scoreColor.bg} px-6 py-4 flex items-center justify-between relative overflow-hidden`}>
+      <div className="px-6 py-4 flex items-center justify-between relative overflow-hidden">
         {/* Decoración de fondo para el header */}
         <div className="absolute right-[-10%] top-[-20%] opacity-20 transform rotate-12">
           <ScoreIcon className="w-24 h-24 text-white" />
         </div>
 
         <div className="flex items-center gap-2.5 z-10">
-          <div className="bg-white/20 backdrop-blur-md p-1.5 rounded-lg">
+          <div className= {`${scoreColor.bg} backdrop-blur-md p-1.5 rounded-lg`}>
             <ScoreIcon className="w-5 h-5 text-white" />
           </div>
-          <span className="text-white text-[10px] uppercase font-black tracking-[0.1em]">
+          <span className={`shrink-0 text-[10px] uppercase tracking-[0.15em] font-black px-3 py-1.5 rounded-lg ${scoreColor.text} border border-current/10`}>
             {percentage >= 80 ? "Candidato Confiable" : percentage >= 60 ? "Bajo Revisión" : "Alerta Crítica"}
           </span>
         </div>
-        <span className="text-white text-3xl font-mono font-black z-10 tracking-tighter">
+        <span className={`${scoreColor.text} text-3xl font-mono font-black z-10 tracking-tighter`}>
           {percentage}%
         </span>
       </div>
@@ -132,7 +133,7 @@ export function ProfileCardVertical({
 
         {/* Botón de Acción - Estilo Moderno */}
         <div className="group/btn">
-          <ModalInfoCandidate />
+          <Boton />
         </div>
       </div>
     </div>

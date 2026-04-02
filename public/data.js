@@ -48,22 +48,22 @@ export const datos = {
       cargos: [
         {
           title: "Presidentes",
-          url: "/dashboard/elecciones-generales/presidentes",
+          url: "/dashboard/presidentes",
           icon: Crown
         },
         {
           title: "Vicepresidentes",
-          url: "/dashboard/elecciones-generales/vicepresidentes",
+          url: "/dashboard/vicepresidentes",
           icon: ChessKing
         },
         {
           title: "Senadores",
-          url: "/dashboard/elecciones-generales/senadores",
+          url: "/dashboard/senadores",
           icon: Gavel
         },
         {
           title: "Diputados",
-          url: "/dashboard/elecciones-generales/diputados",
+          url: "/dashboard/diputados",
           icon: Scale
         },
       ],
