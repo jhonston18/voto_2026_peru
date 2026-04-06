@@ -5,15 +5,13 @@ import {
   Bot,
   Command,
   Crown,
-  Frame,
-  GalleryVerticalEnd,
+  BotMessageSquare,
   Gavel,
   ChessKing,
   Map,
   PieChart,
   Scale,
-  Settings2,
-  SquareTerminal,
+  House,
   ChessQueen,
   ShieldHalf,
   Cuboid,
@@ -41,6 +39,18 @@ export const dataUser = {
 
 
 export const datos = {
+  navMain: [
+    {
+      title: "Inicio",
+      url: "/dashboard",
+      icon: House,
+    },
+    {
+      title: "ChatBot",
+      url: "/dashboard/chatbot",
+      icon: BotMessageSquare,
+    },
+  ],
   generales: [
     {
       title: "Generales",

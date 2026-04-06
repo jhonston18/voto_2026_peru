@@ -121,10 +121,6 @@ export default function CandidateInfoPage() {
 
   return (
 
-
-
-
-
    <main className="flex-1 bg-background min-h-screen pb-20 custom-scrollbar">
       
       {/* HEADER HERO SECTION */}

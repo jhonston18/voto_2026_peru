@@ -22,6 +22,9 @@ export default async function Cargo({ params }: { params: { cargo: string } }) {
     if(cargo == "diputados"){
         return <h1>Pagina de Diputados</h1>
     }
+    if(cargo == "chatbot"){
+        return <h1>Este es la pagina del chatbot</h1> 
+    }
 
 
     return (
