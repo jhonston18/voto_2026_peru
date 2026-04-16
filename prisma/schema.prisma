@@ -12,49 +12,106 @@ datasource db {
 }
 
 model Candidato {
-  id                    String        @id @default("gen_random_uuid()") @db.Uuid
-  nombres               String
-  apellidos             String
-  aiScore               Int           @default(0)
-  fotoUrl               String
-  cargoId               String
-  cargo                 Cargo         @relation(fields: [cargoId], references: [id])
+  id              Int     @id @default(autoincrement())
+  nombres         String
+  apellidoPaterno String
+  apellidoMaterno String
+  aiScore         Int        @default(0)
+  fotoUrl         String
+  descripcionIA   String?    @db.Text 
+  empleos         Empleos[]
+  estudios        Estudios[]
+
+  //relaciones
+  idDepartamento Int?
+  departamento Departamentos? @relation(fields: [idDepartamento], references: [id], onDelete: Cascade)
+
+  idCargo               Int 
+  cargo                 Cargo            @relation(fields: [idCargo], references: [id])
+  idPartido             Int 
+  partidoCandidato      Partido          @relation(fields: [idPartido], references: [id])
   analisisIA            AnalisisIA?
-  idPartido             String
-  partidoCandidato      Partido       @relation(fields: [idPartido], references: [id])
   antecedentesCandidato Antecedente[]
-  documents             Documents[]
-  document_chunks       document_chunks[]
+  documents Documents[]
+  idNumeroCandidato Int
+  numeroCandidato NumeroCandidato @relation(fields: [idNumeroCandidato], references: [id])
+
 }
 
-enum DocumentType {
-  PENAL
-  POLICIAL
-  PLAN_DE_GOBIERNO
-  HOJA_DE_VIDA
-  OTROS
-}
 
-model Antecedente {
-  id          String       @id @default("gen_random_uuid()") @db.Uuid
-  tipo        DocumentType
-  descripcion String
-  candidatoId String
-  candidato   Candidato    @relation(fields: [candidatoId], references: [id], onDelete: Cascade)
-}
-
-model Cargo {
-  id         String      @id @default("gen_random_uuid()") @db.Uuid
-  nombre     String      @unique
-  slug       String      @unique
+model NumeroCandidato{
+  id Int @id @default(autoincrement())
+  numero Int @unique
   candidatos Candidato[]
 }
 
+
+model Departamentos {
+  id Int @id @default(autoincrement())
+  nombre String
+  ubigeo String
+  candidatos Candidato[]
+
+  
+}
+
+model Empleos {
+  id      Int @id @default(autoincrement())
+  nombre  String
+  empresa String
+  periodo String
+
+  //relaciones
+  idCandidato Int
+  candidato   Candidato @relation(fields: [idCandidato], references: [id], onDelete: Cascade)
+}
+
+model Estudios {
+  id             Int @id @default(autoincrement())
+  nivelAcademico String
+  centroEstudios String
+  periodo        String
+  carrera String?
+
+  //relaciones
+  idCandidato Int
+  candidato   Candidato @relation(fields: [idCandidato], references: [id], onDelete: Cascade)
+}
+
+
+
+//cada candidato tiene muchos antecedentes y cada antecedente pertenece a un solo candidato- 1 a muchos
+//esto se llena con ia
+model Antecedente {
+  id          Int @id @default(autoincrement())
+  tipo        String
+  asunto String
+  descripcion String @db.Text
+  
+  idCandidato Int
+  candidato   Candidato    @relation(fields: [idCandidato], references: [id], onDelete: Cascade)
+
+  //Relación directa al documento fuente
+  idDocumento Int?
+  documento   Documents? @relation(fields: [idDocumento], references: [id], onDelete: SetNull)
+
+  
+}
+
+//cada cargo pertenece a un muchos candidatos, uno a muchos. pero cada candidato tiene un solo cargo
+model Cargo {
+  id         Int @id @default(autoincrement()) 
+  nombre     String  @unique
+  slug       String  @unique
+  candidatos Candidato[]
+}
+
+//cada partifo pertenece a muchos candidatos 1 a muchos
 model Partido {
-  id          String      @id @default("gen_random_uuid()") @db.Uuid
-  nombre      String
-  idcandidato String
-  candidatos  Candidato[]
+  id         Int @id @default(autoincrement()) @unique
+  nombre     String @unique
+  fotoUrl        String
+  candidatos Candidato[]
 }
 
 enum Confianza {
@@ -63,32 +120,59 @@ enum Confianza {
   BAJA
 }
 
-model AnalisisIA {
-  id                  String    @id @default("gen_random_uuid()") @db.Uuid
-  candidatoId         String    @unique
-  candidato           Candidato @relation(fields: [candidatoId], references: [id], onDelete: Cascade)
+//analisa lo que hay en la tabla document_chunks, y saca un resumen con su resumen,
+//puntuacion, confianza y me brinda la fuente de informacion
+model AnalisisIA { //analisa los chunks, nos brinda la evaluacion de la ia
+  id                  Int @id @default(autoincrement())
   score               Int       @default(0)
-  resumen             String    @db.Text
+  resumen             String    @db.Text 
   confianza           Confianza
   fuentesUsadas       String[]
   ultimaActualizacion DateTime  @default(now())
+
+  //relacion
+  candidatoId         Int    @unique 
+  candidato           Candidato @relation(fields: [candidatoId], references: [id], onDelete: Cascade)
 }
 
+//alamacena los ducumentos enteros de un solo candidato, cada documento tendra su id
+//te brinda la fecha de entrada o actualizacion de datos ---> createdAt
 model Documents {
-  id           String    @id @default("gen_random_uuid()") @db.Uuid
-  candidate_id String
-  candidate    Candidato @relation(fields: [candidate_id], references: [id], onDelete: Cascade)
-  type         String
-  content      String    @db.Text
-  created_at   DateTime  @default(now())
+  id             Int @id @default(autoincrement()) @unique
+  type           String
+  content        String           @db.Text
+  createdAt      DateTime         @default(now())
+  fuente String
+
+  // relación con tu modelo Candidato
+  idCandidato Int 
+  candidato   Candidato @relation(fields: [idCandidato], references: [id], onDelete: Cascade)
+
+   // ← NUEVO: Antecedentes que vienen de este documento
+  antecedentes Antecedente[]
+  
+  // Chunks de este documento
+  chunks       DocumentChunks[]
+
+
 }
 
-model document_chunks {
-id String @id @default("gen_random_uuid()") @db.Uuid
-document_id String
-content String @db.Text
-candidatoId String
-embedding Unsupported("vector(1536)")?
-candidato Candidato @relation(fields: [candidatoId], references: [id], onDelete: Cascade)
+//cada chunk pertenece a un solo documento y a un solo candidato. cada chunk tiene su contenido que es un trozo de texto
+//
+model DocumentChunks {
+  id        Int @id @default(autoincrement())
+  content   String    @db.Text
+  
+  // campo vector (NO soportado directamente por Prisma)
+  embedding Unsupported("vector(1536)")?
 
+  //relacion con el documento al que extraemos el chunk
+  documentId      Int
+  destinoDocument Documents @relation(fields: [documentId], references: [id], onDelete: Cascade)
+  
+
+  
+  
+
+  
 }
